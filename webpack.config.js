@@ -2,6 +2,7 @@ const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const {CleanWebpackPlugin} = require("clean-webpack-plugin")
 const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const webpack = require("webpack")
 module.exports = {
   mode: "development",
@@ -14,7 +15,7 @@ module.exports = {
     // 输出的文件名  默认为main.js
     filename: "index.js",
     // 输出解析文件的目录。静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
-    publicPath: "/",
+    publicPath: "./",
   },
   // dev端口
   devServer: {
@@ -35,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [{ loader: MiniCssExtractPlugin.loader}, "css-loader", "sass-loader"],
       },
     ],
   },
@@ -57,6 +58,10 @@ module.exports = {
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true),
       "process.env": JSON.stringify(process.env.NODE_ENV),
+    }),
+    //把CSS文件单独打包压缩
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
     }),
     new CleanWebpackPlugin(),
   ],
