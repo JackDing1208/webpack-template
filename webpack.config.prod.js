@@ -1,6 +1,13 @@
-const base = require('./webpack.config')
+const base = require("./webpack.config")
+const {CleanWebpackPlugin} = require("clean-webpack-plugin")
+
 module.exports = Object.assign({}, base, {
-  mode: 'production',
+  mode: "production",
+  plugins: [
+    //直接写会覆盖基础的plugins
+    ...base.plugins,
+    new CleanWebpackPlugin(),
+  ],
   //不需要打包的依赖
   // externals: {
   //   react: {
