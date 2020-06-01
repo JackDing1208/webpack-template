@@ -26,7 +26,9 @@ module.exports = {
     // stats: 'none'
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    //自动补充导入模块的后缀
+    extensions: [".tsx", ".ts", ".jsx", ".js"],
+    //绝对路径的缩写
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
@@ -41,25 +43,37 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: [{loader: MiniCssExtractPlugin.loader}, "css-loader", "sass-loader"],
+        // style-loader会把css文件写进js里面，可以单独分离出来
+        // use: ["style-loader", "css-loader", "sass-loader"],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {publicPath: "../../"},
+          },
+          "css-loader",
+          "sass-loader",
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
             //小体积图片会转译成base64打包到JS文件中，大文件会通过file-loader单独拷贝
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 8192,
-              outputPath: 'images'
-            }
-          }
-        ]
+              outputPath: "img",
+              name: `[name]_[hash:8].[ext]`,
+            },
+          },
+        ],
       },
       // {
-      //   test: /\.(png|jpg|jpeg|gif)$/,
-      //   loader: 'url-loader?limit=8192&name=images/[name].[hash:8].[ext]'
-      // },
+      //   test: /\.(png|svg|jpg|gif)$/,
+      //   use: {
+      //     loader: 'file-loader'
+      //   }
+      // }
     ],
   },
   optimization: {
