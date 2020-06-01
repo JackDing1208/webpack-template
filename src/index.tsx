@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "./style.scss"
 
 const App: React.FC = () => {
   console.log(process.env)
   return (
-    <div>haha</div>
+    <div className={"app"}>haha</div>
   )
 }
 

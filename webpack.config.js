@@ -1,6 +1,7 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require("clean-webpack-plugin")
+const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin")
 const webpack = require("webpack")
 module.exports = {
   mode: "development",
@@ -11,7 +12,7 @@ module.exports = {
     // 输出文件的目标路径
     path: path.resolve(__dirname, "dist"),
     // 输出的文件名  默认为main.js
-    filename: 'index.js',
+    filename: "index.js",
     // 输出解析文件的目录。静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
     publicPath: "/",
   },
@@ -32,12 +33,24 @@ module.exports = {
         exclude: /node_modules/,
         include: path.resolve(__dirname, "src"),
       },
+      {
+        test: /\.(scss|css)$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      //压缩JS文件
+      new UglifyWebpackPlugin({
+        parallel: 4,
+      }),
     ],
   },
   plugins: [
     //自动关联HTML用的插件
     new HtmlWebpackPlugin({
-      template: "index.html",
+      template: path.resolve(__dirname, "src/index.html"),
       title: "webpack-template",
     }),
     //注入全局环境变量
@@ -45,6 +58,6 @@ module.exports = {
       PRODUCTION: JSON.stringify(true),
       "process.env": JSON.stringify(process.env.NODE_ENV),
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
   ],
 }
