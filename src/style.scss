@@ -5,6 +5,8 @@
 }
 
 .app {
-  border: 1px solid red;
-  background: url('/src/img/avatar.jpg');
+  height: 100vh;
+  background-image: url('./img/zelda-bg.png');
+  background-repeat:no-repeat;
+  background-size:100% auto;
 }

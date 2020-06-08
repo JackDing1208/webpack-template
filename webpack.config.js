@@ -13,16 +13,20 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     // 输出的文件名  默认为main.js
     filename: "index.js",
-    // 输出解析文件的目录。静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
+    // 静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
+    // 一般用于PRD环境下静态资源CDN的路径
     publicPath: "./",
   },
   // dev-server配置
   devServer: {
     hot: true,
     port: 3000,
-    open: true,
-    contentBase: path.resolve(__dirname, "dist"),
+    compress: true,
+    // 代表本地端口的根目录localhost:8080/ 默认请求index.html
     publicPath: "/",
+    // 静态资源路径，本地内存中没有静态资源会去对应路径找
+    contentBase: path.resolve(__dirname, "dist"),
+    // 感觉没用
     // stats: 'none'
   },
   resolve: {
@@ -48,7 +52,8 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {publicPath: "../../"},
+            // dist的CSS中的相对路径
+            options: {publicPath: "../"},
           },
           "css-loader",
           "sass-loader",
