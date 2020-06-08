@@ -1,5 +1,7 @@
 const base = require("./webpack.config")
 const {CleanWebpackPlugin} = require("clean-webpack-plugin")
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+
 
 module.exports = Object.assign({}, base, {
   mode: "production",
@@ -7,6 +9,7 @@ module.exports = Object.assign({}, base, {
     //直接写会覆盖基础的plugins
     ...base.plugins,
     new CleanWebpackPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
   //不需要打包的依赖
   // externals: {

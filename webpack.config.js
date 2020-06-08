@@ -6,13 +6,17 @@ const webpack = require("webpack")
 module.exports = {
   mode: "development",
   // 入口 这里应用程序开始执行
-  entry: path.resolve(__dirname, "src/index.tsx"),
+  entry: {
+    main: path.resolve(__dirname, "src/index.tsx"),
+    vendor: ["react", "react-dom"],
+  },
   // 打包出口
   output: {
     // 输出文件的目标路径
     path: path.resolve(__dirname, "dist"),
     // 输出的文件名  默认为main.js
-    filename: "index.js",
+    filename: "[name].bundle.js",
+    chunkFilename:"[name].chunk.js",
     // 静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
     // 一般用于PRD环境下静态资源CDN的路径
     publicPath: "./",
@@ -85,9 +89,23 @@ module.exports = {
     minimizer: [
       //压缩JS文件
       new UglifyWebpackPlugin({
+        //并行数量
         parallel: 4,
       }),
     ],
+    splitChunks: {
+      cacheGroups: {
+        //把vendor中共用模块抽离出来复用
+        vendors: {
+          test: /[\\/]node_modules[\\/]/i,
+          chunks: "all"
+        }
+      }
+    },
+    // The runtime should be in its own chunk
+    // runtimeChunk: {
+    //   name: "runtime"
+    // }
   },
   plugins: [
     //自动关联HTML用的插件
