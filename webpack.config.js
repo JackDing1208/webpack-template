@@ -6,9 +6,10 @@ const webpack = require("webpack")
 module.exports = {
   mode: "development",
   // 入口 这里应用程序开始执行
+  // 配置多入口使第三方JS库与业务代码分离
   entry: {
     main: path.resolve(__dirname, "src/index.tsx"),
-    vendor: ["react", "react-dom"],
+    vendor: ["react", "react-dom", "axios"],
   },
   // 打包出口
   output: {
@@ -16,7 +17,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     // 输出的文件名  默认为main.js
     filename: "[name].bundle.js",
-    chunkFilename:"[name].chunk.js",
+    chunkFilename: "[name].chunk.js",
     // 静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
     // 一般用于PRD环境下静态资源CDN的路径
     publicPath: "./",
@@ -93,14 +94,15 @@ module.exports = {
         parallel: 4,
       }),
     ],
+    //   把vendor中共用模块抽离出来复用
     splitChunks: {
-      cacheGroups: {
-        //把vendor中共用模块抽离出来复用
-        vendors: {
-          test: /[\\/]node_modules[\\/]/i,
-          chunks: "all"
-        }
-      }
+      chunks: "all",
+      // cacheGroups: {
+      // vendors: {
+      //   test: /[\\/]node_modules[\\/]/i,
+      //   chunks: "all"
+      // }
+      // }
     },
     // The runtime should be in its own chunk
     // runtimeChunk: {
