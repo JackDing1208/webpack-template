@@ -16,8 +16,8 @@ module.exports = {
     // 输出文件的目标路径
     path: path.resolve(__dirname, "dist"),
     // 输出的文件名  默认为main.js
-    filename: "[name].bundle.js",
-    chunkFilename: "[name].chunk.js",
+    filename: "[name].bundle.[hash:8].js",
+    chunkFilename: "[name].chunk.[hash:8].js",
     // 静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
     // 一般用于PRD环境下静态资源CDN的路径
     publicPath: "./",
@@ -94,7 +94,8 @@ module.exports = {
         parallel: 4,
       }),
     ],
-    //   把vendor中共用模块抽离出来复用
+    // 把entry文件中共用模块抽离出来复用
+    // https://webpack.docschina.org/plugins/split-chunks-plugin/
     splitChunks: {
       chunks: "all",
       // cacheGroups: {
