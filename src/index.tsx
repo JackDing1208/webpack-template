@@ -2,9 +2,10 @@ import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import "@/style.scss"
 import avatar from "@/img/avatar.jpg"
-import axios from "axios"
+// import axios from "axios"
 import {
   HashRouter as Router,
+  RouteComponentProps,
   Switch,   //有点坑别用
   Route,
   Link,
@@ -45,12 +46,19 @@ const App: React.FC = () => {
   )
 }
 
-interface IProp {
-  history?: any
+
+interface ITest {
+  name: string
+  age: number
 }
 
+// Route Component中props会继承history属性
+interface IProp extends RouteComponentProps, ITest {
+}
+
+
 const Home: React.FC<IProp> = (props) => {
-  console.log(props)
+  console.log(props.name)
 
   const onClick = () => {
     props.history.push("/about")

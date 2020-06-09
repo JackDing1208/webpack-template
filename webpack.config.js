@@ -9,7 +9,7 @@ module.exports = {
   // 配置多入口使第三方JS库与业务代码分离
   entry: {
     main: path.resolve(__dirname, "src/index.tsx"),
-    vendor: ["react", "react-dom", "axios"],
+    vendor: ["react", "react-dom", "axios","react-router-dom"],
   },
   // 打包出口
   output: {
