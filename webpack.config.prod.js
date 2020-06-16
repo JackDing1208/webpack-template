@@ -9,7 +9,7 @@ module.exports = Object.assign({}, base, {
     //直接写会覆盖基础的plugins
     ...base.plugins,
     new CleanWebpackPlugin(),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   //不需要打包的依赖
   // externals: {

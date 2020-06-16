@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "sideEffects": [
+    "*.css",
+    "*.scss",
+    "*.sass"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=DEV webpack-dev-server --config webpack.config.dev.js",
@@ -33,10 +38,13 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@types/react-loadable": "^5.5.3",
     "@types/react-router-dom": "^5.1.5",
     "axios": "^0.19.2",
+    "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-loadable": "^5.5.0",
     "react-router-dom": "^5.2.0"
   }
 }

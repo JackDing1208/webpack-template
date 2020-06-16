@@ -8,16 +8,17 @@ module.exports = {
   // 入口 这里应用程序开始执行
   // 配置多入口使第三方JS库与业务代码分离
   entry: {
-    main: path.resolve(__dirname, "src/index.tsx"),
-    vendor: ["react", "react-dom", "axios","react-router-dom"],
+    index: path.resolve(__dirname, "src/index.tsx"),
+    // 新版配置不需要多入口单独设置打包
+    // vendor: ["react", "react-dom", "axios","react-router-dom"],
   },
   // 打包出口
   output: {
     // 输出文件的目标路径
     path: path.resolve(__dirname, "dist"),
     // 输出的文件名  默认为main.js
-    filename: "[name].bundle.[hash:8].js",
-    chunkFilename: "[name].chunk.[hash:8].js",
+    filename: "[name]-[hash:6].bundle.js",
+    chunkFilename: "[name]-[contentHash:6].chunk.js",
     // 静态资源最终访问路径 = output.publicPath + 资源loader或插件等配置路径
     // 一般用于PRD环境下静态资源CDN的路径
     publicPath: "./",
@@ -31,8 +32,6 @@ module.exports = {
     publicPath: "/",
     // 静态资源路径，本地内存中没有静态资源会去对应路径找
     contentBase: path.resolve(__dirname, "dist"),
-    // 感觉没用
-    // stats: 'none'
   },
   resolve: {
     //自动补充导入模块的后缀
@@ -73,7 +72,7 @@ module.exports = {
             options: {
               limit: 8192,
               outputPath: "img",
-              name: `[name]_[hash:8].[ext]`,
+              name: `[name]-[hash:8].[ext]`,
             },
           },
         ],
@@ -87,28 +86,35 @@ module.exports = {
     ],
   },
   optimization: {
+    //压缩混淆JS文件
     minimizer: [
-      //压缩JS文件
       new UglifyWebpackPlugin({
-        //并行数量
+        //打包时并行数量
         parallel: 4,
       }),
     ],
-    // 把entry文件中共用模块抽离出来复用
+    // JS代码分包
     // https://webpack.docschina.org/plugins/split-chunks-plugin/
     splitChunks: {
+      // 默认async，会把动态加载的模块单独打包
       chunks: "all",
-      // cacheGroups: {
-      // vendors: {
-      //   test: /[\\/]node_modules[\\/]/i,
-      //   chunks: "all"
-      // }
-      // }
+      cacheGroups: {
+        vendors: {
+          test: /node_modules\/(?!(lodash)\/)/,
+          name: "vendors",
+          chunks: "all",
+        },
+        lodash: {
+          test: /node_modules\/lodash\//, // lodash 库单独打包，并命名为 vender-lodash
+          name: "vender-lodash",
+        },
+      },
     },
     // The runtime should be in its own chunk
+    // 每次打包时只有改动过的文件hash变化
     // runtimeChunk: {
-    //   name: "runtime"
-    // }
+    //   name: "runtime",
+    // },
   },
   plugins: [
     //自动关联HTML用的插件
@@ -119,11 +125,12 @@ module.exports = {
     //注入全局环境变量
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify("1.1.1"),
       "process.env": JSON.stringify(process.env.NODE_ENV),
     }),
     //把CSS文件单独打包压缩
     new MiniCssExtractPlugin({
-      filename: "css/[name].css",
+      filename: "css/[name]-[contentHash:6].css",
     }),
   ],
 }

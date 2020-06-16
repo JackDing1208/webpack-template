@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import "@/style.scss"
-import avatar from "@/img/avatar.jpg"
-// import axios from "axios"
+import {add} from "./utils/calculate"
+import avatar from "@/imgs/avatar.jpg"
+import Loadable from 'react-loadable';
 import {
   HashRouter as Router,
   RouteComponentProps,
@@ -12,15 +13,38 @@ import {
   Redirect,
 } from "react-router-dom";
 
+//
+import ("./2").then((xxx) => {
+  xxx.default()
+})
+import "./1"
+
+
+const Loading = (xxx: any) => {
+  if (xxx.pastDelay) {
+    return <div/>;
+  }
+  return null;
+};
+
+export const About = Loadable({
+  loader: () => import(/* webpackChunkName: "AboutComponent" */ './pages/about'),
+  loading: Loading,
+  delay: 200
+});
+
 
 const App: React.FC = () => {
+  const x = add(1, 2)
+  console.log(x)
+  console.log(PRODUCTION)
   return (
     <Router>
       {/*<Route path="/" component={APP}>*/}
       {/**/}
       {/*</Route>*/}
       <div className={"app"}>
-        {/*<img src={avatar} alt="" width={200} height={200}/>*/}
+        <img src={avatar} alt="" width={200} height={200}/>
         <ul className={"nav"}>
           <li>
             <Link to="/home">Home</Link>
@@ -53,12 +77,12 @@ interface ITest {
 }
 
 // Route Component中props会继承history属性
-interface IProp extends RouteComponentProps, ITest {
+
+declare interface IProp extends RouteComponentProps {
 }
 
 
 const Home: React.FC<IProp> = (props) => {
-  console.log(props.name)
 
   const onClick = () => {
     props.history.push("/about")
@@ -71,10 +95,6 @@ const Home: React.FC<IProp> = (props) => {
   );
 }
 
-
-const About: React.FC<IProp> = () => {
-  return <h2>About</h2>;
-}
 
 const User: React.FC<IProp> = () => {
   return <h2>User</h2>;
