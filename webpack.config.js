@@ -44,7 +44,22 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(tsx|ts)?$/,
+        //babel-loader需要写在ts-loader前面
+        // test: /\.jsx?$/,
+        // exclude: /(node_modules)/,
+        // use: {
+        //   loader: 'babel-loader',
+        //   可以单独配置在.babelrc中
+          // options: {
+          //   presets: ['react', 'env', 'stage-0', 'stage-3'],
+          //   plugins: [
+          //     'transform-decorators-legacy',
+          //   ],
+          // },
+        // },
+      },
+      {
+        test: /\.tsx?$/,
         loader: "awesome-typescript-loader",
         exclude: /node_modules/,
         include: path.resolve(__dirname, "src"),

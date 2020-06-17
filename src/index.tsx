@@ -78,7 +78,7 @@ interface ITest {
 
 // Route Component中props会继承history属性
 
-declare interface IProp extends RouteComponentProps {
+interface IProp extends RouteComponentProps {
 }
 
 
