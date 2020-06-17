@@ -71,10 +71,6 @@ const App: React.FC = () => {
 }
 
 
-interface ITest {
-  name: string
-  age: number
-}
 
 // Route Component中props会继承history属性
 
