@@ -35,16 +35,14 @@ export const About = Loadable({
 
 
 const App: React.FC = () => {
+  console.log("rerender")
+
   const x = add(1, 2)
   console.log(x)
   console.log(PRODUCTION)
   return (
     <Router>
-      {/*<Route path="/" component={APP}>*/}
-      {/**/}
-      {/*</Route>*/}
       <div className={"app"}>
-        <img src={avatar} alt="" width={200} height={200}/>
         <ul className={"nav"}>
           <li>
             <Link to="/home">Home</Link>
@@ -56,8 +54,8 @@ const App: React.FC = () => {
             <Link to="/haha">User</Link>
           </li>
         </ul>
-        <div className={"container"}>
 
+        <div className={"container"}>
           <Redirect path="/" to="/home"/>
           {/*Route不要包含子组件*/}
           <Route path="/home" component={Home}/>
@@ -71,7 +69,6 @@ const App: React.FC = () => {
 }
 
 
-
 // Route Component中props会继承history属性
 
 interface IProp extends RouteComponentProps {
@@ -79,13 +76,13 @@ interface IProp extends RouteComponentProps {
 
 
 const Home: React.FC<IProp> = (props) => {
-
   const onClick = () => {
-    props.history.push("/about")
+    document.body.style.setProperty('--theme-color', 'pink')
   }
   return (
     <Fragment>
       <h1>Home</h1>
+      <img src={avatar} alt="" width={200} height={200}/>
       <button onClick={onClick}>点我</button>
     </Fragment>
   );

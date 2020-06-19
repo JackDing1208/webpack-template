@@ -1,3 +1,6 @@
+$theme-color:var(--theme-color);
+
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -11,10 +14,11 @@ ul, ol {
 .app {
   height: 100vh;
   //background-image: url('./imgs/zelda-bg.png');
-  background-repeat: no-repeat;
-  background-size: auto 100%;
+  //background-repeat: no-repeat;
+  //background-size: auto 100%;
   display: flex;
   flex-direction: column;
+  background: $theme-color;
 }
 
 .nav {
