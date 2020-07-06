@@ -3,7 +3,6 @@ import {RouteComponentProps} from "react-router-dom"
 import _ from "lodash"
 import Button from "../components/button"
 import {Menu, Dropdown, Pagination, Skeleton} from 'antd';
-import 'antd/dist/antd.css';
 
 
 interface IProps extends RouteComponentProps {}

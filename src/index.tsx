@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import "@/style.scss"
-import 'antd/dist/antd.css';
 import {add} from "./utils/calculate"
 import avatar from "@/imgs/avatar.jpg"
 import Loadable from 'react-loadable';
