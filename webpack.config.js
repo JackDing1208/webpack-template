@@ -44,19 +44,19 @@ module.exports = {
   module: {
     rules: [
       {
-        //babel-loader需要写在ts-loader前面
-        // test: /\.jsx?$/,
-        // exclude: /(node_modules)/,
-        // use: {
-        //   loader: 'babel-loader',
-        //   可以单独配置在.babelrc中
+        //babel-loader需要写在ts-loader前面才能转译到JS
+        test: /\.jsx?$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: "babel-loader",
+          // options一般单独配置在.babelrc中
           // options: {
           //   presets: ['react', 'env', 'stage-0', 'stage-3'],
           //   plugins: [
           //     'transform-decorators-legacy',
           //   ],
           // },
-        // },
+        },
       },
       {
         test: /\.tsx?$/,

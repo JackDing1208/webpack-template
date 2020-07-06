@@ -1,9 +1,11 @@
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import "@/style.scss"
+import 'antd/dist/antd.css';
 import {add} from "./utils/calculate"
 import avatar from "@/imgs/avatar.jpg"
 import Loadable from 'react-loadable';
+import {DatePicker, Divider, Affix, Button} from 'antd';
 import {
   HashRouter as Router,
   RouteComponentProps,
@@ -81,9 +83,17 @@ const Home: React.FC<IProp> = (props) => {
   }
   return (
     <Fragment>
+      <Affix offsetTop={10}>
+        <Button type="primary" onClick={() => {}}>
+          Affix top
+        </Button>
+      </Affix>
       <h1>Home</h1>
       <img src={avatar} alt="" width={200} height={200}/>
       <button onClick={onClick}>点我</button>
+      <DatePicker/>
+      <Divider/>
+
     </Fragment>
   );
 }
