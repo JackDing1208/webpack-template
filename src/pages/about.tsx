@@ -3,7 +3,9 @@ import {RouteComponentProps} from "react-router-dom"
 import _ from "lodash"
 import Button from "../components/button"
 import {Menu, Dropdown, Pagination, Skeleton} from 'antd';
+import xxx from "../2"
 
+xxx()
 
 interface IProps extends RouteComponentProps {}
 

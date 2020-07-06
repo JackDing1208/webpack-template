@@ -14,7 +14,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-//
+// 动态导入语法
 import ("./2").then((xxx) => {
   xxx.default()
 })
